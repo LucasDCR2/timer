@@ -57,6 +57,22 @@ mixin _$TimerController on _TimerController, Store {
     });
   }
 
+  late final _$isProgressiveAtom =
+      Atom(name: '_TimerController.isProgressive', context: context);
+
+  @override
+  bool get isProgressive {
+    _$isProgressiveAtom.reportRead();
+    return super.isProgressive;
+  }
+
+  @override
+  set isProgressive(bool value) {
+    _$isProgressiveAtom.reportWrite(value, super.isProgressive, () {
+      super.isProgressive = value;
+    });
+  }
+
   late final _$themeModeAtom =
       Atom(name: '_TimerController.themeMode', context: context);
 
@@ -153,6 +169,17 @@ mixin _$TimerController on _TimerController, Store {
   }
 
   @override
+  void trocarProgressive() {
+    final _$actionInfo = _$_TimerControllerActionController.startAction(
+        name: '_TimerController.trocarProgressive');
+    try {
+      return super.trocarProgressive();
+    } finally {
+      _$_TimerControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void trocarTheme() {
     final _$actionInfo = _$_TimerControllerActionController.startAction(
         name: '_TimerController.trocarTheme');
@@ -213,6 +240,7 @@ mixin _$TimerController on _TimerController, Store {
 isRunning: ${isRunning},
 marcador: ${marcador},
 tempoContado: ${tempoContado},
+isProgressive: ${isProgressive},
 themeMode: ${themeMode},
 currentRoute: ${currentRoute},
 countdownValue: ${countdownValue}

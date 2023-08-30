@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final TimerController _cronometer = TimerController();
+  final TimerController cronometer = TimerController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Timer',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: _cronometer.themeMode,
+      themeMode: cronometer.themeMode,
       home: Observer(
         builder: (_) {
           return Scaffold(
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
               actions: [
                 IconButton(
                   icon: Icon(Icons.brightness_4),
-                  onPressed: _cronometer.trocarTheme,
+                  onPressed: cronometer.trocarTheme,
                 ),
               ],
             ),
@@ -38,67 +38,15 @@ class MyApp extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Center(
-                      child: Observer(
-                        builder: (_) {
-                          return Text(
-                            _cronometer.formatTime(_cronometer.tempoContado),
-                            style: TextStyle(fontSize: 80),
-                          );
-                        },
-                      ),
-                    ),
+                    child: cronometer.isProgressive
+                        ? _buildProgressiveLayout(cronometer)
+                        : _buildRegressiveLayout(cronometer),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Observer(
-                        builder: (_) {
-                          if (_cronometer.isRunning) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: _cronometer.stop,
-                                  child: Text('PARAR'),
-                                ),
-                                SizedBox(width: 10),
-                                ElevatedButton(
-                                  onPressed: _cronometer.marcar,
-                                  child: Text('MARCAR'),
-                                ),
-                              ],
-                            );
-                          } else {
-                            return ElevatedButton(
-                              onPressed: _cronometer.start,
-                              child: Text('INICIAR'),
-                            );
-                          }
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: _cronometer.clear,
-                        child: Text('LIMPAR'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Expanded(
-                    flex: 1,
-                    child: Observer(
-                      builder: (_) {
-                        return ListView.builder(
-                          itemCount: _cronometer.marcador.length,
-                          itemBuilder: (_, index) {
-                            return ListTile(
-                              title: Text(_cronometer.marcador[index]),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                  ElevatedButton(
+                    onPressed: cronometer.trocarProgressive,
+                    child: Text(cronometer.isProgressive
+                        ? 'Alternar para Regressivo'
+                        : 'Alternar para Progressivo'),
                   ),
                 ],
               ),
@@ -106,6 +54,113 @@ class MyApp extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildProgressiveLayout(TimerController cronometer) {
+    return Container(
+      margin: EdgeInsets.only(top: 250),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Observer(
+            builder: (_) {
+              return Text(
+                cronometer.formatTime(cronometer.tempoContado),
+                style: TextStyle(fontSize: 80),
+              );
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Observer(
+                builder: (_) {
+                  if (cronometer.isRunning) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: cronometer.stop,
+                          child: Text('PARAR'),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: cronometer.marcar,
+                          child: Text('MARCAR'),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return ElevatedButton(
+                      onPressed: cronometer.start,
+                      child: Text('INICIAR'),
+                    );
+                  }
+                },
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: cronometer.clear,
+                child: Text('LIMPAR'),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            child: Observer(
+              builder: (_) {
+                return ListView.builder(
+                  itemCount: cronometer.marcador.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      title: Text(cronometer.marcador[index]),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRegressiveLayout(TimerController cronometer) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          'Contagem regressiva: ${cronometer.countdownValue}',
+          style: TextStyle(fontSize: 24),
+        ),
+        SizedBox(height: 20),
+        Observer(
+          builder: (_) {
+            if (cronometer.isRunning) {
+              return ElevatedButton(
+                onPressed: cronometer.stopCountdown,
+                child: Text('PARAR'),
+              );
+            } else {
+              return ElevatedButton(
+                onPressed: cronometer.startCountdown,
+                child: Text('INICIAR'),
+              );
+            }
+          },
+        ),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            // Abra um diálogo ou uma tela para permitir que o usuário defina o valor inicial do cronômetro regressivo
+            // e atualize cronometer.countdownValue com o valor definido.
+          },
+          child: Text('Definir valor inicial'),
+        ),
+      ],
     );
   }
 }

@@ -60,6 +60,14 @@ abstract class _TimerController with Store {
 
 //=============================================< Extras >=======================================//
 
+  @observable
+  bool isProgressive = true;
+
+  @action
+  void trocarProgressive() {
+    isProgressive = !isProgressive;
+    // Pode adicionar lógica adicional aqui, se necessário
+  }
 
   @observable
   ThemeMode themeMode = ThemeMode.dark;
@@ -77,7 +85,7 @@ abstract class _TimerController with Store {
     currentRoute = route;
   }
 
-//=====================================< Cronômetro Regressivo >==================================//
+ // =====================< Cronômetro Regressivo >=====================
 
   @observable
   int countdownValue = 60;
@@ -107,3 +115,4 @@ abstract class _TimerController with Store {
     countdownValue = value;
   }
 }
+
