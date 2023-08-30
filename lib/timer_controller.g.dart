@@ -57,6 +57,54 @@ mixin _$TimerController on _TimerController, Store {
     });
   }
 
+  late final _$themeModeAtom =
+      Atom(name: '_TimerController.themeMode', context: context);
+
+  @override
+  ThemeMode get themeMode {
+    _$themeModeAtom.reportRead();
+    return super.themeMode;
+  }
+
+  @override
+  set themeMode(ThemeMode value) {
+    _$themeModeAtom.reportWrite(value, super.themeMode, () {
+      super.themeMode = value;
+    });
+  }
+
+  late final _$currentRouteAtom =
+      Atom(name: '_TimerController.currentRoute', context: context);
+
+  @override
+  String get currentRoute {
+    _$currentRouteAtom.reportRead();
+    return super.currentRoute;
+  }
+
+  @override
+  set currentRoute(String value) {
+    _$currentRouteAtom.reportWrite(value, super.currentRoute, () {
+      super.currentRoute = value;
+    });
+  }
+
+  late final _$countdownValueAtom =
+      Atom(name: '_TimerController.countdownValue', context: context);
+
+  @override
+  int get countdownValue {
+    _$countdownValueAtom.reportRead();
+    return super.countdownValue;
+  }
+
+  @override
+  set countdownValue(int value) {
+    _$countdownValueAtom.reportWrite(value, super.countdownValue, () {
+      super.countdownValue = value;
+    });
+  }
+
   late final _$_TimerControllerActionController =
       ActionController(name: '_TimerController', context: context);
 
@@ -105,11 +153,69 @@ mixin _$TimerController on _TimerController, Store {
   }
 
   @override
+  void trocarTheme() {
+    final _$actionInfo = _$_TimerControllerActionController.startAction(
+        name: '_TimerController.trocarTheme');
+    try {
+      return super.trocarTheme();
+    } finally {
+      _$_TimerControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void navigateTo(String route) {
+    final _$actionInfo = _$_TimerControllerActionController.startAction(
+        name: '_TimerController.navigateTo');
+    try {
+      return super.navigateTo(route);
+    } finally {
+      _$_TimerControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void startCountdown() {
+    final _$actionInfo = _$_TimerControllerActionController.startAction(
+        name: '_TimerController.startCountdown');
+    try {
+      return super.startCountdown();
+    } finally {
+      _$_TimerControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopCountdown() {
+    final _$actionInfo = _$_TimerControllerActionController.startAction(
+        name: '_TimerController.stopCountdown');
+    try {
+      return super.stopCountdown();
+    } finally {
+      _$_TimerControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCountdownValue(int value) {
+    final _$actionInfo = _$_TimerControllerActionController.startAction(
+        name: '_TimerController.setCountdownValue');
+    try {
+      return super.setCountdownValue(value);
+    } finally {
+      _$_TimerControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isRunning: ${isRunning},
 marcador: ${marcador},
-tempoContado: ${tempoContado}
+tempoContado: ${tempoContado},
+themeMode: ${themeMode},
+currentRoute: ${currentRoute},
+countdownValue: ${countdownValue}
     ''';
   }
 }

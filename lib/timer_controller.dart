@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
-
-import 'dart:async';
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:mobx/mobx.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+
 part 'timer_controller.g.dart';
 
 class TimerController = _TimerController with _$TimerController;
@@ -54,5 +55,55 @@ abstract class _TimerController with Store {
     int minutes = (time ~/ 60) % 60;
     int hours = time ~/ 3600;
     return '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
+
+
+//=============================================< Extras >=======================================//
+
+
+  @observable
+  ThemeMode themeMode = ThemeMode.dark;
+
+  @action
+  void trocarTheme() {
+    themeMode = themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  @observable
+  String currentRoute = 'main';
+
+  @action
+  void navigateTo(String route) {
+    currentRoute = route;
+  }
+
+//=====================================< Cronômetro Regressivo >==================================//
+
+  @observable
+  int countdownValue = 60;
+
+  Timer? _countdownTimer;
+
+  @action
+  void startCountdown() {
+    isRunning = true;
+    _countdownTimer = Timer.periodic(Duration(seconds: 1), (_) {
+      if (countdownValue > 0) {
+        countdownValue--;
+      } else {
+        stopCountdown();
+      }
+    });
+  }
+
+  @action
+  void stopCountdown() {
+    isRunning = false;
+    _countdownTimer?.cancel();
+  }
+
+  @action
+  void setCountdownValue(int value) {
+    countdownValue = value;
   }
 }
