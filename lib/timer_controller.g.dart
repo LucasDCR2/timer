@@ -169,11 +169,11 @@ mixin _$TimerController on _TimerController, Store {
   }
 
   @override
-  void trocarProgressive() {
+  void trocarProgressive(bool newValue) {
     final _$actionInfo = _$_TimerControllerActionController.startAction(
         name: '_TimerController.trocarProgressive');
     try {
-      return super.trocarProgressive();
+      return super.trocarProgressive(newValue);
     } finally {
       _$_TimerControllerActionController.endAction(_$actionInfo);
     }

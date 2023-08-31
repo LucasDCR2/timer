@@ -60,14 +60,15 @@ abstract class _TimerController with Store {
 
 //=============================================< Extras >=======================================//
 
-  @observable
-  bool isProgressive = true;
+@observable
+bool isProgressive = true;
 
-  @action
-  void trocarProgressive() {
-    isProgressive = !isProgressive;
-    // Pode adicionar lógica adicional aqui, se necessário
-  }
+@action
+void trocarProgressive(bool newValue) {
+  isProgressive = newValue;
+  // Pode adicionar lógica adicional aqui, se necessário
+}
+
 
   @observable
   ThemeMode themeMode = ThemeMode.dark;
