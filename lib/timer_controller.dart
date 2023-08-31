@@ -91,6 +91,9 @@ void trocarProgressive(bool newValue) {
   @observable
   int countdownValue = 60;
 
+  @observable
+  int maxCountdownValue = 60;
+
   Timer? _countdownTimer;
 
   @action
@@ -114,6 +117,12 @@ void trocarProgressive(bool newValue) {
   @action
   void setCountdownValue(int value) {
     countdownValue = value;
+    maxCountdownValue = value;
+  }
+
+    @action
+  void setMaxCountdownValue(int value) {
+    maxCountdownValue = value;
   }
 }
 
