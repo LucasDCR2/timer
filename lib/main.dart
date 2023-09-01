@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
                       children: [
                         ElevatedButton.icon(
                           onPressed: cronometer.stop,
-                          icon: Icon(Icons.stop),
+                          icon: Icon(Icons.timer_off_outlined),
                           label: Text('PARAR'),
                         ),
                         SizedBox(width: 10),
@@ -116,7 +116,7 @@ class MyApp extends StatelessWidget {
                   } else {
                     return ElevatedButton.icon(
                       onPressed: cronometer.start,
-                      icon: Icon(Icons.watch_later),
+                      icon: Icon(Icons.timer),
                       label: Text('INICIAR'),
                     );
                   }
@@ -197,11 +197,9 @@ class MyApp extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   CircularProgressIndicator(
-                    value: cronometer.countdownValue /
-                        cronometer.maxCountdownValue,
+                    value: cronometer.countdownValue / cronometer.maxCountdownValue,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      cronometer.countdownValue <=
-                              cronometer.maxCountdownValue * 0.25
+                      cronometer.countdownValue <= cronometer.maxCountdownValue * 0.25
                           ? Colors.red
                           : Colors.blue,
                     ),
@@ -223,13 +221,13 @@ class MyApp extends StatelessWidget {
                 if (cronometer.isRunning) {
                   return ElevatedButton.icon(
                     onPressed: cronometer.stopCountdown,
-                    icon: Icon(Icons.stop),
+                    icon: Icon(Icons.timer_off_outlined),
                     label: Text('PARAR'),
                   );
                 } else {
                   return ElevatedButton.icon(
                     onPressed: cronometer.startCountdown,
-                    icon: Icon(Icons.watch_later),
+                    icon: Icon(Icons.timer),
                     label: Text('INICIAR'),
                   );
                 }
